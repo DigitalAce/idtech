@@ -35,11 +35,12 @@ int main()
 
 		if (ans < r) {
 			cout << "Wrong\n";
-		
+			numbertry--;
 		}
 
 		if (ans > r) {
 			cout << "Wrong\n";
+			numbertry--;
 
 		}
 		if (numbertry == 0) {
