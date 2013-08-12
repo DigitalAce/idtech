@@ -10,5 +10,5 @@ int main ()
 	cin >> name;
 	cout << "Your name is"
 		<< name << "!\n";
-	system("pause";)
+	system("pause");
 }
