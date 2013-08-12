@@ -1,0 +1,51 @@
+#include <iostream>
+#include <cstdlib>
+#include <ctime>
+#include <string>
+using namespace std;
+int main()
+{
+	srand((unsigned int)time(NULL));
+	int r = rand()%10 + 1;
+	int m = rand()%10;
+	int numbertry = 5;
+	bool active = true;
+	int ans;
+
+	string loosemessages[10];
+	loosemessages[0] = "Narwhal fighting a Dinosaur...\n Your point is useless.\n\n";
+	loosemessages[1] = "How about NOOOOOOOOOOOOO?\n\n";
+	loosemessages[2] = "Where's my tractor?\n\n";
+	loosemessages[3] = "=>nil\n\n";
+	loosemessages[4] = "These are the most uninspired insults.\n Ever.\n\n";
+	loosemessages[5] = "If stupid was a disease....\n\n";
+	loosemessages[6] = "Your coding is like you.\n It lacks inspiration and detail.\n\n";
+	loosemessages[7] = "Hey TiVo, reccommend this!!\n\n";
+	loosemessages[8] = "Your typing is worse then a Second Grader and a 4chan user. Combined.\n\n";
+	loosemessages[9] = "Ergonomic leads to more trouble\n Then it does solutions\n\n";
+
+	while (active== true) {
+		cout << "Guess a number from 1 - 10 -->\n";
+		cin >> ans;
+		if (ans == r) {
+			cout << "You are correct\n";
+			system("pause");
+
+		}
+
+		if (ans < r) {
+			cout << "Wrong\n";
+		
+		}
+
+		if (ans > r) {
+			cout << "Wrong\n";
+
+		}
+		if (numbertry == 0) {
+			cout << loosemessages[m];
+			numbertry = 5;
+			system("pause");
+		}
+	}
+}
