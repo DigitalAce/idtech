@@ -1,0 +1,15 @@
+#include <string>
+#include <iostream>
+
+using namespace std;
+int main()
+{
+	cout << "Enter the password!\n";
+	string input;
+	cin >> input;
+	while (input !="pengu1n")
+	{
+		cout << "Try again.\n";
+		cin >> input;
+	}
+}
