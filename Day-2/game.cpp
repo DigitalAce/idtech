@@ -34,7 +34,7 @@ int main()
 				}
 				else
 				{
-					cout << board [;];
+					cout << board [i];
 				}
 				i++;
 			}
