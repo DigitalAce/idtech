@@ -15,7 +15,8 @@ int main()
 
 	while (true)
 	{
-		char input = getch();
+		if (kbhit()) {
+			char input = getch();
 			if (input == 'a')
 			{
 				playerx--;
@@ -24,22 +25,23 @@ int main()
 			{
 				playerx++;
 			}
-			system("cls");
-			int i = 0;
-			while(i<0)
+		}
+		system("cls");
+		int i = 0;
+		while(i<10)
+		{
+			if(i == playerx)
 			{
-				if(i == playerx)
-				{
-					cout << playericon;
-				}
-				else
-				{
-					cout << board [i];
-				}
-				i++;
+				cout << playericon;
 			}
-			cout << "\n";
-			// Frame rate limiter
-			Sleep(50);
+			else
+			{
+				cout << board [i];
+			}
+			i++;
+		}
+		cout << "\n";
+		// Frame rate limiter
+		Sleep(50);
 	}
 }
