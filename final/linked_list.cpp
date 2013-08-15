@@ -28,6 +28,7 @@ class LinkedList
 
 			void addNode ( int );
 			bool deleteNode ( int );
+			bool deleteNodeByIndex ( int );
 			void deleteAllNodes();
 
 			bool isEmpty();
@@ -100,21 +101,21 @@ void LinkedList::addNode ( int newData )
 	     *pCur = head.headPtr;
 	pNew -> data = newData;
 
-	while ( pCur && dataCmp( pNew -> data, pCur -> data ) >= 0 )
+	while ( pCur && dataCmp( pNew -> data, pCur -> data ) >= 0 ) // Loop through to the end
 		{
-			pPre = pCur;
+			pPre = pCur; // Set before cur, last actual node before the designated spot
 			pCur = pCur -> next;
 		}
 
-	if ( pPre )
+	if ( pPre ) // If there is a node...
 	{
-		pNew -> next = pPre -> next;
+		pNew -> next = pPre -> next; // pNew is next to be NULL
 		pPre -> next = pNew;
-		head.count++;
+		head.count++; // Implement a count
 	}
 	else
 	{
-		pNew -> next = head.headPtr;
+		pNew -> next = head.headPtr; 
 		head.headPtr = pNew;
 		head.count++;
 	}
@@ -123,8 +124,8 @@ void LinkedList::addNode ( int newData )
 bool LinkedList::deleteNode( int data )
 {
 	bool exit;
-	Node *pPre = NULL,
-	     *pCur = head.headPtr;
+	Node *pPre = NULL, // pPre is NULL
+	     *pCur = head.headPtr; // pCur is the next head pointer
 
 	while ( pCur && dataCmp( pCur -> data, data ) < 0 )
 	{
@@ -136,7 +137,7 @@ bool LinkedList::deleteNode( int data )
 	{
 		if ( pPre )
 		{
-			pPre -> next = pCur -> next;
+			pPre -> next = pCur -> next; 
 			delete pCur;
 			head.count--;
 			exit = true; // return true if successful
@@ -153,6 +154,52 @@ bool LinkedList::deleteNode( int data )
 		exit = false; // return false if unsuccessful
 
 	return exit;
+}
+
+bool LinkedList::deleteNodeByIndex( int index )
+{
+    bool exit;
+    Node *pPre = NULL,
+         *pCur = head.headPtr;
+    int currentIndex = 0;
+
+    while ( pCur )
+    {
+        // Here we just loop until we reach our desired index.
+        if (currentIndex == index)
+        {
+            break;
+        }
+
+        // Increment the current index and pCur to the next item.
+        currentIndex++;
+        pPre = pCur;
+        pCur = pCur -> next;
+    }
+
+    // If pCur is still valid at this point, it means we broke at the
+    // proper place and pCur should be at the proper index.
+    if ( pCur )
+    {
+        if ( pPre )
+        {
+            pPre -> next = pCur -> next;
+            delete pCur;
+            head.count--;
+            exit = true; // return true if successful
+        }
+        else
+        {
+            head.headPtr = pCur -> next;
+            delete pCur;
+            head.count--;
+            exit = true; // return true if successful
+        }
+    }
+    else
+        exit = false; // return false if unsuccessful
+
+    return exit;
 }
 
 void LinkedList::deleteAllNodes()
@@ -223,11 +270,12 @@ void printMenu()
 	cout << "2. Remove from head" << endl;
 	cout << "3. Add node " << endl;
 	cout << "4. Delete node" << endl;
-	cout << "5. Delete all nodes" << endl;
-	cout << "6. Is the list empty?" << endl;
-	cout << "7. Get number of nodes" << endl;
-	cout << "8. Display all nodes" << endl;
-	cout << "9. Quit" << endl;
+	cout << "5. Delete nodes by Integer" << end1;
+	cout << "6. Delete all nodes" << endl;
+	cout << "7. Is the list empty?" << endl;
+	cout << "8. Get number of nodes" << endl;
+	cout << "9. Display all nodes" << endl;
+	cout << "10. Quit" << endl;
 }
 
 int getChoice()
@@ -291,18 +339,33 @@ void processChoice( int choice, LinkedList& list )
 			else
 				cerr << "List is empty" << endl;
 			break;
-		case 5: list.deleteAllNodes();
+		case 5: if ( !list.isEmpty() )
+			{
+			data = getData();
+				if ( list.deleteNodeByIndex( data ) )
+				{
+					cout << "Node " << data
+					     << " deleted";
+					cout << endl;
+				}
+				else
+					cerr << "Node not found" << endl;
+			}
+			else
+				cerr << "List is empty" << endl;
+			break;
+		case 6: list.deleteAllNodes();
 			cout << "All nodes deleted" << endl;
 			break;
-		case 6: cout << ( list.isEmpty() ? 
+		case 7: cout << ( list.isEmpty() ? 
 			          "List is empty" : "List is not empty" );
 			cout << endl;
 			break;
-		case 7: cout << "No. of nodes: "
+		case 8: cout << "No. of nodes: "
 			     << list.getNoOfNodes();
 			cout << endl;
 			break;
-		case 8: list.displayAllNodes();
+		case 9: list.displayAllNodes();
 			break;
 		default: cout << "Invalid choice" << endl;
 	}
@@ -327,4 +390,3 @@ int main()
 
 	return 0;
 }
-
