@@ -61,6 +61,8 @@ void LinkedList::addToHead ( int newData )
 	Node *pNew = new Node;
 	pNew -> data = newData;
 	pNew -> next = head.headPtr;
+    
+
 	head.headPtr = pNew;
 	head.count++;
 }
@@ -101,7 +103,8 @@ void LinkedList::addNode ( int newData )
 	     *pCur = head.headPtr;
 	pNew -> data = newData;
 
-	while ( pCur && dataCmp( pNew -> data, pCur -> data ) >= 0 ) // Loop through to the end
+//	while ( pCur && dataCmp( pNew -> data, pCur -> data ) >= 0 ) // Loop through to the end
+	while ( pCur ) // Loop through to the end // TH: just use the pointer to loop to the end.
 		{
 			pPre = pCur; // Set before cur, last actual node before the designated spot
 			pCur = pCur -> next;
@@ -109,13 +112,15 @@ void LinkedList::addNode ( int newData )
 
 	if ( pPre ) // If there is a node...
 	{
-		pNew -> next = pPre -> next; // pNew is next to be NULL
+		//pNew -> next = pPre -> next; // pNew is next to be NULL
+		pNew -> next = NULL; // pNew is next to be NULL // TH: pNew is new end -- Must be pointing to NULL, not back at the head.
 		pPre -> next = pNew;
 		head.count++; // Implement a count
 	}
 	else
 	{
-		pNew -> next = head.headPtr; 
+		//pNew -> next = head.headPtr;
+		pNew -> next = NULL; // TH: Again, pNew is new end -- Must be pointing to NULL, not back at the head.
 		head.headPtr = pNew;
 		head.count++;
 	}
@@ -127,7 +132,8 @@ bool LinkedList::deleteNode( int data )
 	Node *pPre = NULL, // pPre is NULL
 	     *pCur = head.headPtr; // pCur is the next head pointer
 
-	while ( pCur && dataCmp( pCur -> data, data ) < 0 )
+//	while ( pCur && dataCmp( pCur -> data, data ) < 0 )
+	while ( pCur && dataCmp( pCur -> data, data ) != 0 )
 	{
 		pPre = pCur;
 		pCur = pCur -> next;
@@ -266,11 +272,12 @@ void LinkedList::displayNode( Node *node )
 
 void printMenu()
 {
+    cout << endl;  // TH: give yourself a space
 	cout << "1. Add to head" << endl;
 	cout << "2. Remove from head" << endl;
 	cout << "3. Add node " << endl;
 	cout << "4. Delete node" << endl;
-	cout << "5. Delete nodes by Integer" << end1;
+	cout << "5. Delete nodes by Integer" << endl; // TH: This was an "end1" not "endl" -- bit by font bug
 	cout << "6. Delete all nodes" << endl;
 	cout << "7. Is the list empty?" << endl;
 	cout << "8. Get number of nodes" << endl;
@@ -367,6 +374,7 @@ void processChoice( int choice, LinkedList& list )
 			break;
 		case 9: list.displayAllNodes();
 			break;
+        case 10: break;
 		default: cout << "Invalid choice" << endl;
 	}
 
@@ -381,11 +389,11 @@ int main()
 		printMenu();
 		choice = getChoice();
 
-		if ( choice != 9 )
+		//if ( choice != 9 )
 			processChoice( choice, list );
 
-	} while ( choice != 9 );
-	
+	//} while ( choice != 9 );
+    } while ( choice != 10 );
 
 
 	return 0;
